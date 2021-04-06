@@ -2,7 +2,7 @@ import subprocess
 
 from behave import *
 
-from utils import read_process
+from simulation_steps.utils import read_process
 
 use_step_matcher("parse")
 

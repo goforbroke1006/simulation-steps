@@ -1,4 +1,4 @@
-# simulation_steps
+# simulation-steps
 
 ### How to up local env
 
