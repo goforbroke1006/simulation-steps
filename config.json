@@ -1,0 +1,34 @@
+{
+  "targets": [
+    {
+      "name": "pg-01-int",
+      "type": "postgres",
+      "config": {
+        "host": "127.0.0.1",
+        "port": 5432,
+        "name": "db_name",
+        "user": "db_user",
+        "password": "db_pass"
+      }
+    },
+    {
+      "name": "redis-01-int",
+      "type": "redis",
+      "config": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "db": 0,
+        "password": "p@ssworD"
+      }
+    },
+    {
+      "name": "bus-01-int",
+      "type": "data-bus",
+      "config": {
+        "host": "127.0.0.1",
+        "port": 8888,
+        "consumer": "bdd-debug-script"
+      }
+    }
+  ]
+}

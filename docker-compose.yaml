@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  redis:
+    image: redis:latest
+    command: redis-server --bind 0.0.0.0 --requirepass p@ssworD --maxmemory 256mb --maxmemory-policy allkeys-lru
+#    command: redis-server --include /etc/redis/redis.conf
+#    volumes:
+#      - ./.docker-compose/redis/:/etc/redis/
+#    environment:
+#      ALLOW_EMPTY_PASSWORD: 'yes'
+#      REDIS_PASSWORD: p@ssworD
+#      REDIS_DISABLE_COMMANDS: GET,SET,FLUSHDB,FLUSHALL,CONFIG
+    ports:
+      - 6379:6379
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: 'db_name'
+      POSTGRES_USER: 'db_user'
+      POSTGRES_PASSWORD: 'db_pass'
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.docker-compose/postgres/migrations/:/docker-entrypoint-initdb.d/
+      - postgresql-data:/var/lib/postgresql/data
+
+volumes:
+  postgresql-data: ~
