@@ -7,7 +7,7 @@ setup(name='simulation_steps',
       description='Behave steps to reproduce bugs',
       author='Sergey Cherkesov',
       author_email='go.for.broke1006@gmail.com',
-      url='https://github.com/goforbroke1006/simulation-steps',
+      url='https://github.com/goforbroke1006/simulation_steps',
       packages=[
           'features',
       ],
