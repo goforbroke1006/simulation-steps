@@ -5,15 +5,15 @@
 
 ```bash
 python3 -m pip install \
-  -e git+https://github.com/goforbroke1006/simulation-steps.git@0.0.6#egg=simulation_steps
+  -e git+https://github.com/goforbroke1006/simulationsteps.git@0.0.13#egg=simulationsteps
 pip freeze > requirements.txt
 ```
 
 ##### ./features/environment.py
 
 ```python
-from simulation_steps.utils import patch_context
-from simulation_steps.validators import fields_exists
+from simulationsteps.utils import patch_context
+from simulationsteps.validators import fields_exists
 
 
 def before_all(context):

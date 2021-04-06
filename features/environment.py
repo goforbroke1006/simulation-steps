@@ -1,5 +1,5 @@
-from simulation_steps.utils import patch_context
-from simulation_steps.validators import fields_exists
+from simulationsteps.utils import patch_context
+from simulationsteps.validators import fields_exists
 
 
 def before_all(context):
