@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 setup(name='simulationsteps',
       packages=find_packages(include=['simulationsteps', 'features', 'features.steps']),
-      version='0.0.14',
+      version='0.0.15',
       description='Behave steps to reproduce bugs',
       author='Sergey Cherkesov',
       author_email='go.for.broke1006@gmail.com',
