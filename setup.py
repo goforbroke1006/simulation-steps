@@ -3,12 +3,12 @@
 from distutils.core import setup
 
 setup(name='simulation-steps',
-      version='0.0.7',
+      version='0.0.8',
       description='Behave steps to reproduce bugs',
       author='Sergey Cherkesov',
       author_email='go.for.broke1006@gmail.com',
       url='https://github.com/goforbroke1006/simulation-steps',
       packages=[
-          'features',
+          'simulation_steps',
       ],
       )
