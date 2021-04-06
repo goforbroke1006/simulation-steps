@@ -2,7 +2,7 @@
 
 from distutils.core import setup
 
-setup(name='simulation-steps',
+setup(name='simulation_steps',
       version='1.0',
       description='Behave steps to reproduce bugs',
       author='Sergey Cherkesov',

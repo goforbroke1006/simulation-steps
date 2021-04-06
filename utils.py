@@ -1,6 +1,6 @@
 import json
 
-from features.misc.validators import validate_postgres, validate_redis
+from validators import validate_postgres, validate_redis
 
 
 def patch_context(context, config_filename, custom_validators_fn: {}):

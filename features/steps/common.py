@@ -2,7 +2,7 @@ import subprocess
 
 from behave import *
 
-from features.misc.utils import read_process
+from utils import read_process
 
 use_step_matcher("parse")
 
