@@ -49,7 +49,7 @@ def redis_command_step_impl(context, config_name, command):
     if target_config is None:
         raise Exception(f'target {config_name} not found')
 
-    shell = f'redis-cli -h {target_config["host"]} -p {target_config["port"]} -a {target_config["password"]} {command}'
+    shell = f'redis-cli -h {target_config["host"]} -p {target_config["port"]} -a \'{target_config["password"]}\' {command}'
     print(f'$ {shell}')
 
     process = subprocess.Popen(shell, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -57,7 +57,7 @@ def redis_command_step_impl(context, config_name, command):
     process.wait()
     assert process.returncode == 0, f'Unexpected code {process.returncode}, stderr: {stderr}'
 
-    print(f'# {stdout}')
+    print(stdout)
 
 
 @then('redis "{config_name}" KEYS {pattern}')
@@ -85,6 +85,6 @@ def redis_assert_keys_exists(context, config_name, pattern):
     process.wait()
     assert process.returncode == 0, f'Unexpected code {process.returncode}, stderr: {stderr}'
 
-    print(f'{stdout}')
+    print(stdout)
 
     assert len(stdout.splitlines()) > 0, f'any key not found'
