@@ -10,6 +10,5 @@ setup(name='simulation_steps',
       url='https://github.com/goforbroke1006/simulation-steps',
       packages=[
           'features',
-          'features.misc',
       ],
       )
