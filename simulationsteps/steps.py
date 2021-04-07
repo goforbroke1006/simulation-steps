@@ -65,7 +65,9 @@ def postgres_assets_command_return_certain_count_step_impl(context, config_name,
 
     print(stdout)
 
-    assert len(stdout.splitlines()) == count, f'wrong rows count returned'
+    output_lines_count = len(stdout.splitlines())
+    tuples_count = output_lines_count - 1 - 1  # minus headers line and status line
+    assert tuples_count == count, f'wrong rows count returned'
 
 
 @step('redis "{config_name}" command "{command}"')
