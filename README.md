@@ -5,7 +5,7 @@
 
 ```bash
 python3 -m pip install \
-  -e git+https://github.com/goforbroke1006/simulationsteps.git@0.0.16#egg=simulationsteps
+  -e git+https://github.com/goforbroke1006/simulationsteps.git@0.0.17#egg=simulationsteps
 pip freeze > requirements.txt
 ```
 

@@ -37,6 +37,37 @@ def postgres_command_step_impl(context, config_name):
     print(f'# {stdout}')
 
 
+@then('postgres "{config_name}" command return {count:d} rows')
+def postgres_assets_command_return_certain_count_step_impl(context, config_name, count):
+    """
+    :type context: behave.runner.Context
+    :type config_name: str
+    :type count: int
+    """
+
+    target_config = context.simulation.targets['postgres'][config_name]
+    if target_config is None:
+        raise Exception(f'target {config_name} not found')
+
+    sql = context.text
+
+    shell = f'PGPASSWORD="{target_config["password"]}" ' \
+            f'psql -h {target_config["host"]} -p {target_config["port"]} ' \
+            f'-U {target_config["user"]} ' \
+            f'-d {target_config["name"]} ' \
+            f'-c "{sql}"'
+    print(f'$ {shell}')
+
+    process = subprocess.Popen(shell, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = read_process(process)
+    process.wait()
+    assert process.returncode == 0, f'Unexpected code {process.returncode}, stderr: {stderr}'
+
+    print(stdout)
+
+    assert len(stdout.splitlines()) == count, f'wrong rows count returned'
+
+
 @step('redis "{config_name}" command "{command}"')
 def redis_command_step_impl(context, config_name, command):
     """
