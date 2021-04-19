@@ -21,7 +21,7 @@ def postgres_command_step_impl(context, config_name):
         raise Exception(f'target {config_name} not found')
 
     sql = context.text
-    sql = sql.replace('"', '\"')
+    sql = sql.replace('"', '\\"')
 
     shell = f'PGPASSWORD="{target_config["password"]}" ' \
             f'psql -h {target_config["host"]} -p {target_config["port"]} ' \
