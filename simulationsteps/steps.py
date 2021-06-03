@@ -3,7 +3,7 @@ import subprocess
 
 from behave import *
 
-from simulationsteps.utils import read_process, json_has_subset
+from simulationsteps.utils import read_process, json_has_subset, json_get_value
 
 use_step_matcher("parse")
 
@@ -162,3 +162,20 @@ def openapi_assert_response_contains_data(context, config_name, method, uri, bod
     context.openapi_last_response = json.loads(stdout)
 
     pass
+
+
+@then('openapi last response path "{path}" has value "{value}"')
+def step_impl(context, path, value):
+    """
+    :type context: behave.runner.Context
+    :type path str
+    :type value str
+
+    Path syntax described here https://pypi.org/project/jsonpath-ng/
+    """
+
+    actual_values = json_get_value(context.openapi_last_response, path)
+
+    assert [value, ] == actual_values, f'expects {value}, got {actual_values}'
+
+    raise NotImplementedError(u'STEP: Then openapi last response path "instruments[0].asset_id" has value "2"')

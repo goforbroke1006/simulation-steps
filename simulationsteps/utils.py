@@ -73,3 +73,14 @@ def json_has_subset(target, subset):
                     yield False
 
     return all(recursive_check_subset(target, subset))
+
+
+def json_get_value(content, path):
+    from jsonpath_ng import parse
+    jsonpath_expr = parse(path)
+
+    content = json.loads(content)
+
+    extracted = [match.value for match in jsonpath_expr.find(content)]
+
+    return extracted
