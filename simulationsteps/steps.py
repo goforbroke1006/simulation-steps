@@ -2,7 +2,7 @@ import subprocess
 
 from behave import *
 
-from simulationsteps.utils import read_process
+from simulationsteps.utils import read_process, json_has_subset
 
 use_step_matcher("parse")
 
@@ -122,3 +122,39 @@ def redis_assert_keys_exists(context, config_name, pattern):
     print(stdout)
 
     assert len(stdout.splitlines()) > 0, f'any key not found'
+
+
+@step('openapi "{config_name}" request [{method}] "{uri}" with "{body}" body, response contains "{resp}"')
+def openapi_assert_response_contains_data(context, config_name, method, uri, body, resp):
+    """
+
+    :type context: behave.runner.Context
+    :type config_name: str
+    :type method: str
+    :type uri: str
+    :type body: str
+    :type resp: str
+    :return:
+    """
+
+    target_config = context.simulation.targets['openapi'][config_name]
+    if target_config is None:
+        raise Exception(f'target {config_name} not found')
+
+    method = method.upper()
+    base_url = target_config["url"]
+    full_url = base_url + uri
+
+    shell = f'curl -H "Content-Type: application/json" -X {method} {full_url} --data "{body}"'
+    print(f'$ {shell}')
+
+    process = subprocess.Popen(shell, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = read_process(process)
+    process.wait()
+    assert process.returncode == 0, f'Unexpected code {process.returncode}, stderr: {stderr}'
+
+    print(stdout)
+
+    assert json_has_subset(stdout, resp), f'response {stdout} is not contains {resp}'
+
+    pass

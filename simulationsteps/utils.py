@@ -59,3 +59,17 @@ def read_process(process):
         stderr += line.decode("utf-8")
 
     return stdout, stderr
+
+
+def json_has_subset(target, subset):
+    def recursive_check_subset(a, b):
+        for x in a:
+            if not isinstance(a[x], dict):
+                yield (x in b) and (a[x] == b[x])  # return a bool
+            else:
+                if x in b:
+                    yield all(recursive_check_subset(a[x], b[x]))
+                else:
+                    yield False
+
+    return all(recursive_check_subset(target, subset))
