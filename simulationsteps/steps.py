@@ -1,3 +1,4 @@
+import json
 import subprocess
 
 from behave import *
@@ -124,7 +125,8 @@ def redis_assert_keys_exists(context, config_name, pattern):
     assert len(stdout.splitlines()) > 0, f'any key not found'
 
 
-@step('openapi "{config_name}" request [{method}] "{uri}" with "{body}" body, response contains')
+@given('openapi "{config_name}" request [{method}] "{uri}" with "{body}" body')
+@when('openapi "{config_name}" request [{method}] "{uri}" with "{body}" body')
 def openapi_assert_response_contains_data(context, config_name, method, uri, body):
     """
 
@@ -140,7 +142,6 @@ def openapi_assert_response_contains_data(context, config_name, method, uri, bod
     if target_config is None:
         raise Exception(f'target {config_name} not found')
 
-    expected_resp = context.text
     method = method.upper()
     base_url = target_config["url"]
     full_url = base_url + uri
@@ -155,6 +156,9 @@ def openapi_assert_response_contains_data(context, config_name, method, uri, bod
 
     print(stdout)
 
-    assert json_has_subset(stdout, expected_resp), f'response {stdout} is not contains {expected_resp}'
+    # assert json_has_subset(stdout, expected_resp), f'response {stdout} is not contains {expected_resp}'
+
+    # context.openapi_last_command_code = http_code # TODO: need take code
+    context.openapi_last_response = json.loads(stdout)
 
     pass
