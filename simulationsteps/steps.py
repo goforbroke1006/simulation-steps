@@ -124,8 +124,8 @@ def redis_assert_keys_exists(context, config_name, pattern):
     assert len(stdout.splitlines()) > 0, f'any key not found'
 
 
-@step('openapi "{config_name}" request [{method}] "{uri}" with "{body}" body, response contains "{resp}"')
-def openapi_assert_response_contains_data(context, config_name, method, uri, body, resp):
+@step('openapi "{config_name}" request [{method}] "{uri}" with "{body}" body, response contains')
+def openapi_assert_response_contains_data(context, config_name, method, uri, body):
     """
 
     :type context: behave.runner.Context
@@ -133,7 +133,6 @@ def openapi_assert_response_contains_data(context, config_name, method, uri, bod
     :type method: str
     :type uri: str
     :type body: str
-    :type resp: str
     :return:
     """
 
@@ -141,6 +140,7 @@ def openapi_assert_response_contains_data(context, config_name, method, uri, bod
     if target_config is None:
         raise Exception(f'target {config_name} not found')
 
+    expected_resp = context.text
     method = method.upper()
     base_url = target_config["url"]
     full_url = base_url + uri
@@ -155,6 +155,6 @@ def openapi_assert_response_contains_data(context, config_name, method, uri, bod
 
     print(stdout)
 
-    assert json_has_subset(stdout, resp), f'response {stdout} is not contains {resp}'
+    assert json_has_subset(stdout, expected_resp), f'response {stdout} is not contains {expected_resp}'
 
     pass
