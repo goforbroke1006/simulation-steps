@@ -164,18 +164,18 @@ def openapi_assert_response_contains_data(context, config_name, method, uri, bod
     pass
 
 
-@then('openapi last response path "{path}" has value "{value}"')
-def step_impl(context, path, value):
+@then('openapi last response path "{path}" has value "{values}"')
+def step_impl(context, path, values):
     """
     :type context: behave.runner.Context
     :type path str
-    :type value str
+    :type values str
 
     Path syntax described here https://pypi.org/project/jsonpath-ng/
     """
 
     actual_values = json_get_value(context.openapi_last_response, path)
 
-    assert [value, ] == actual_values, f'expects {value}, got {actual_values}'
+    values = values.split(",")
 
-    raise NotImplementedError(u'STEP: Then openapi last response path "instruments[0].asset_id" has value "2"')
+    assert values == actual_values, f'expects {values}, got {actual_values}'
