@@ -22,6 +22,18 @@ def validate_redis(target):
     pass
 
 
+def validate_openapi(target):
+    """
+
+    :param target:
+    :return: bool
+    """
+
+    fields_exists(target, 'url', )
+
+    pass
+
+
 def fields_exists(target, *fields):
     for f in fields:
         assert f in target['config'], \

@@ -1,6 +1,6 @@
 import json
 
-from simulationsteps.validators import validate_postgres, validate_redis
+from simulationsteps.validators import validate_postgres, validate_redis, validate_openapi
 
 
 def patch_context(context, config_filename, custom_validators_fn: {}):
@@ -21,6 +21,7 @@ def patch_context(context, config_filename, custom_validators_fn: {}):
     validators_fn = {
         'postgres': validate_postgres,
         'redis': validate_redis,
+        'openapi': validate_openapi,
     }
     for cv_type in custom_validators_fn:
         validators_fn[cv_type] = custom_validators_fn[cv_type]
