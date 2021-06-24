@@ -15,8 +15,6 @@ def postgres_command_step_impl(context, config_name):
     :param config_name: string
     """
 
-    # config_name = config_name.strip('"')
-
     target_config = context.simulation.targets['postgres'][config_name]
     if target_config is None:
         raise Exception(f'target {config_name} not found')
@@ -37,6 +35,35 @@ def postgres_command_step_impl(context, config_name):
     assert process.returncode == 0, f'Unexpected code {process.returncode}, stderr: {stderr}'
 
     print(f'# {stdout}')
+
+
+@step('postgres "{config_name}" command async')
+def postgres_command_step_impl(context, config_name):
+    """
+    :type context: behave.runner.Context
+    :param config_name: string
+    """
+
+    target_config = context.simulation.targets['postgres'][config_name]
+    if target_config is None:
+        raise Exception(f'target {config_name} not found')
+
+    sql = context.text
+    sql = sql.replace('"', '\\"')
+
+    shell = f'PGPASSWORD="{target_config["password"]}" ' \
+            f'psql -h {target_config["host"]} -p {target_config["port"]} ' \
+            f'-U {target_config["user"]} ' \
+            f'-d {target_config["name"]} ' \
+            f'-c "{sql}"'
+    print(f'$ {shell}')
+
+    process = subprocess.Popen(shell, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # stdout, stderr = read_process(process)
+    # process.wait()
+    # assert process.returncode == 0, f'Unexpected code {process.returncode}, stderr: {stderr}'
+    #
+    # print(f'# {stdout}')
 
 
 @then('postgres "{config_name}" command return {count:d} rows')
