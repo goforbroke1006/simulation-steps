@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt install -y python3.8-venv
+
 PYTHON_INTERPRETER=python3
 VIRTUAL_ENV_DIR=venv
 

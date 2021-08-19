@@ -1,6 +1,36 @@
 import json
+import time
+import re
 
 from simulationsteps.validators import validate_postgres, validate_redis, validate_openapi
+
+
+def calculate_time(timestamp_formula):
+    m = re.search('now([+\\-\\d]+)seconds', timestamp_formula)
+    if m:
+        seconds = m.group(1)
+        return int(time.time()) + int(seconds)
+        # return calendar.timegm(datetime.now().utctimetuple()) + int(seconds)
+    else:
+        return int(timestamp_formula)
+    pass
+
+
+def replace_placeholders(variables, val_raw):
+    # print('val_raw (%s) = %s' % (type(val_raw), val_raw))
+
+    if not isinstance(val_raw, str):
+        return val_raw
+
+    for n in variables:
+        value = str(variables[n])
+        placeholder = '%' + n + '%'
+        # print('try replace %s with %s' % (placeholder, value))
+        val_raw = val_raw.replace(placeholder, value)
+
+    # print('val_raw (%s) = %s' % (type(val_raw), val_raw))
+    return str(val_raw)
+    pass
 
 
 def patch_context(context, config_filename, custom_validators_fn: {}):
