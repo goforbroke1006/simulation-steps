@@ -67,6 +67,7 @@ def postgres_command_step_impl(context, config_name):
 
 
 @then('postgres "{config_name}" command return {count:d} rows')
+@then('postgres "{config_name}" command return "{count:d}" rows')
 def postgres_assets_command_return_certain_count_step_impl(context, config_name, count):
     """
     :type context: behave.runner.Context
