@@ -110,7 +110,8 @@ def json_get_value(content, path):
     from jsonpath_ng import parse
     jsonpath_expr = parse(path)
 
-    content = json.loads(content)
+    if isinstance(content, str):
+        content = json.loads(content)
 
     extracted = [match.value for match in jsonpath_expr.find(content)]
 
