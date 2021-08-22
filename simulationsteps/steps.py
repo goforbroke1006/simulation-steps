@@ -244,6 +244,6 @@ def openapi_assert_response_contains_data(context, path, values):
     for i, val in enumerate(values):
         values[i] = str(val)
     for i, val in enumerate(actual_values):
-        values[i] = str(val)
+        actual_values[i] = str(val)
 
     assert values == actual_values, f'expects {values}, got {actual_values}'
