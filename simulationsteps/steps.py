@@ -209,7 +209,7 @@ def openapi_send_request(context, config_name, method, uri, body):
     base_url = target_config["url"]
     full_url = base_url + uri
 
-    shell = f'curl -H "Content-Type: application/json" -X {method} {full_url} --data "{body}"'
+    shell = f'curl -H "Content-Type: application/json" -X {method} {full_url} --data \'{body}\''
     print(f'$ {shell}')
 
     process = subprocess.Popen(shell, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
