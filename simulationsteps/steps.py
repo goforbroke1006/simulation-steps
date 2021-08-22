@@ -240,6 +240,7 @@ def openapi_assert_response_contains_data(context, path, values):
     actual_values = json_get_value(context.openapi_last_response, path)
 
     values = values.split(",")
-    actual_values = str(actual_values)
+    for i, val in enumerate(values):
+        values[i] = str(val)
 
     assert values == actual_values, f'expects {values}, got {actual_values}'
