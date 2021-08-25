@@ -188,9 +188,14 @@ def redis_assert_keys_exists(context, config_name, pattern):
     assert len(stdout.splitlines()) > 0, f'any key not found'
 
 
-@given('openapi "{config_name}" request [{method}] "{uri}" with "{body}" body')
-@when('openapi "{config_name}" request [{method}] "{uri}" with "{body}" body')
-def openapi_send_request(context, config_name, method, uri, body):
+@step('openapi "{config_name}" request [{method}] "{uri}" with body')
+def openapi_send_request__literal(context, config_name, method, uri):
+    openapi_send_request__param(context, config_name, method, uri, context.text)
+    pass
+
+
+@step('openapi "{config_name}" request [{method}] "{uri}" with "{body}" body')
+def openapi_send_request__param(context, config_name, method, uri, body):
     """
 
     :type context: behave.runner.Context
